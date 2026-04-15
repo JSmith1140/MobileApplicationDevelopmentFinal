@@ -295,9 +295,9 @@ fun ExpandableBoxCard(item: BoxItem) {
                             contentDescription = item.title,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(160.dp)
+                                .height(180.dp)
                                 .padding(bottom = 8.dp),
-                            contentScale = ContentScale.Crop
+                            contentScale = ContentScale.Fit
                         )
                     }
 
@@ -351,7 +351,7 @@ fun DiningScreen() {
 
             item { BoxHeader("Meal Plan Options") }
             items(mealPlans) { plan ->
-                BoxCard(plan)
+                ExpandableBoxCard(plan)
             }
         }
     }
@@ -405,7 +405,7 @@ fun TrivialScreen(viewModel: MainViewModel) {
                 setSelectedAnswers(emptyMap())
                 score = null
                 isError = false
-                
+
                 if (allQuestions.isNotEmpty()) {
                     questions = allQuestions.shuffled()
                 } else {
