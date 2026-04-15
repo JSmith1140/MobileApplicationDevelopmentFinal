@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TabScreen(viewModel: MainViewModel) {
     var tabIndex by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Acad", "Trivial", "Fame", "Dining")
+    val tabs = listOf("Acad", "Trivial", "Home", "Dining")
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -140,7 +140,7 @@ fun FameScreen() {
     )
 
     Column(modifier = Modifier.fillMaxSize()) {
-        HeaderSection("Famous People & Accomplishments")
+        HeaderSection("Home")
 
         LazyColumn(
             modifier = Modifier
