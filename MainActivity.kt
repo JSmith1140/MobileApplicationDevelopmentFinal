@@ -128,7 +128,7 @@ fun HistoryTimeline() {
             .padding(vertical = 8.dp)
     ) {
         BoxHeader("University History")
-        
+
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F8FF)),
@@ -485,7 +485,7 @@ fun TrivialScreen(viewModel: MainViewModel) {
         HeaderSection("University Trivia")
 
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         // Load Button
         Button(
@@ -503,9 +503,9 @@ fun TrivialScreen(viewModel: MainViewModel) {
                 }
             },
             colors = navyButtonColors,
-            modifier = Modifier.width(120.dp)
+            modifier = Modifier.width(100.dp)
         ) {
-            Text("Load", fontSize = 18.sp)
+            Text("Load", fontSize = 16.sp)
         }
 
         // Input Section
@@ -518,7 +518,7 @@ fun TrivialScreen(viewModel: MainViewModel) {
             },
             keyboardType = KeyboardType.Number,
             isError = isError,
-            errorMessage = "Enter a number between 1 and 10"
+            errorMessage = "Enter 1 to 10"
         )
 
         // Go Button
@@ -542,12 +542,12 @@ fun TrivialScreen(viewModel: MainViewModel) {
                 }
             },
             colors = orangeButtonColors,
-            modifier = Modifier.width(100.dp)
+            modifier = Modifier.width(80.dp)
         ) {
-            Text("Go", fontSize = 18.sp)
+            Text("Go", fontSize = 16.sp)
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         // Questions List
         LazyColumn(
@@ -584,10 +584,10 @@ fun TrivialScreen(viewModel: MainViewModel) {
                 enabled = selectedAnswers.size == questions.size,
                 colors = orangeButtonColors,
                 modifier = Modifier
-                    .padding(vertical = 16.dp)
-                    .width(130.dp)
+                    .padding(vertical = 8.dp)
+                    .width(110.dp)
             ) {
-                Text("Grade", fontSize = 18.sp)
+                Text("Grade", fontSize = 16.sp)
             }
         }
 
@@ -595,18 +595,18 @@ fun TrivialScreen(viewModel: MainViewModel) {
         score?.let {
             Column(
                 horizontalAlignment = CenterHorizontally,
-                modifier = Modifier.padding(bottom = 24.dp)
+                modifier = Modifier.padding(bottom = 12.dp)
             ) {
                 Text(
                     text = "Your Score",
                     color = MaterialTheme.colorScheme.tertiary,
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = it,
                     color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.displayLarge,
+                    style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.ExtraBold
                 )
             }
@@ -623,14 +623,14 @@ fun QuestionCard(question: TrivialQuestion, selectedAnswer: String?, onAnswerSel
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(12.dp)) {
             Text(
                 text = question.questionName,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.secondary,
-                fontSize = 18.sp
+                fontSize = 16.sp
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             val choices = listOf("A", "B", "C", "D")
             val choiceText = listOf(question.choiceA, question.choiceB, question.choiceC, question.choiceD)
@@ -642,7 +642,7 @@ fun QuestionCard(question: TrivialQuestion, selectedAnswer: String?, onAnswerSel
                         .selectable(
                             selected = (selectedAnswer == choice),
                             onClick = { onAnswerSelected(choice) } )
-                        .padding(vertical = 4.dp),
+                        .padding(vertical = 2.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
@@ -656,7 +656,7 @@ fun QuestionCard(question: TrivialQuestion, selectedAnswer: String?, onAnswerSel
                     Text(
                         text = "$choice. ${choiceText[index]}",
                         color = MaterialTheme.colorScheme.secondary,
-                        fontSize = 16.sp
+                        fontSize = 14.sp
                     )
                 }
             }
@@ -852,15 +852,15 @@ private fun HeaderSection(title: String) {
         contentDescription = "Header Image",
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp),
-        contentScale = ContentScale.Crop
+            .height(80.dp),
+        contentScale = ContentScale.Fit
     )
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.secondary)
-            .padding(horizontal = 14.dp, vertical = 10.dp)
+            .padding(horizontal = 14.dp, vertical = 4.dp)
     ) {
         Text(
             text = title,
@@ -961,11 +961,11 @@ fun CustomTextField(
             label = { Text(title) },
             isError = isError,
             modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 6.dp)
+                .padding(horizontal = 10.dp, vertical = 4.dp)
                 .fillMaxWidth(),
             textStyle = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = 22.sp
+                fontSize = 18.sp
             ),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.tertiary,
@@ -980,7 +980,7 @@ fun CustomTextField(
             Text(
                 text = errorMessage,
                 color = MaterialTheme.colorScheme.error,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 modifier = Modifier.padding(start = 16.dp)
             )
         }
