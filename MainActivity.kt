@@ -146,7 +146,8 @@ fun FameScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(bottom = 20.dp)
         ) {
             item {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -464,7 +465,8 @@ fun TrivialScreen(viewModel: MainViewModel) {
             modifier = Modifier
                 .weight(1f)
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(bottom = 20.dp)
         ) {
             items(questions) { question ->
                 QuestionCard(
