@@ -85,7 +85,7 @@ fun TabScreen(viewModel: MainViewModel) {
             when (tabIndex) {
                 0 -> ScreenSetup(viewModel)
                 1 -> TrivialScreen(viewModel)
-                2 -> HomeScreen()
+                2 -> FameScreen()
                 3 -> DiningScreen()
             }
         }
@@ -109,7 +109,95 @@ fun TabScreen(viewModel: MainViewModel) {
 }
 
 @Composable
-fun HomeScreen() {
+fun HistoryTimeline() {
+    val historyEvents = listOf(
+        BoxItem("1919", "Origin: Northeastern University opens a branch in Providence, laying the groundwork for the future RWU."),
+        BoxItem("1945", "Expansion: Post-WWII enrollment surge brings new focus on business and technical programs."),
+        BoxItem("1956", "Independence: The school is officially chartered as Roger Williams Junior College."),
+        BoxItem("1969", "The Big Move: RWU relocates to the beautiful 140-acre waterfront campus in Bristol, RI."),
+        BoxItem("1992", "University Status: The institution is renamed Roger Williams University, reflecting its academic growth."), // Middle Point
+        BoxItem("2012", "Legal Excellence: RWU Law is recognized as a top school for public interest law in the region."),
+        BoxItem("2024", "Modern Era: RWU leads in coastal sustainability and community-engaged learning.")
+    )
+
+    var currentIndex by remember { mutableIntStateOf(4) } // Start at 1992 (Middle Point)
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+    ) {
+        BoxHeader("University History")
+        
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F8FF)),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Left Arrow
+                IconButton(
+                    onClick = { if (currentIndex > 0) currentIndex-- },
+                    enabled = currentIndex > 0
+                ) {
+                    Icon(
+                        painter = painterResource(id = android.R.drawable.ic_media_previous),
+                        contentDescription = "Earlier",
+                        tint = if (currentIndex > 0) MaterialTheme.colorScheme.secondary else Color.LightGray
+                    )
+                }
+
+                // Event Content
+                Column(
+                    modifier = Modifier.weight(1f).padding(horizontal = 12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = historyEvents[currentIndex].title,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 22.sp,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = historyEvents[currentIndex].detail,
+                        textAlign = TextAlign.Center,
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.secondary,
+                        lineHeight = 20.sp
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Page ${currentIndex + 1} of ${historyEvents.size}",
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                }
+
+                // Right Arrow
+                IconButton(
+                    onClick = { if (currentIndex < historyEvents.size - 1) currentIndex++ },
+                    enabled = currentIndex < historyEvents.size - 1
+                ) {
+                    Icon(
+                        painter = painterResource(id = android.R.drawable.ic_media_next),
+                        contentDescription = "Later",
+                        tint = if (currentIndex < historyEvents.size - 1) MaterialTheme.colorScheme.secondary else Color.LightGray
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FameScreen() {
     val nationalRankings = listOf(
         BoxItem("Best Regional University", "Roger Williams University is placed 35th as the best regional university in the North. This ranking highlights our commitment to providing a top-tier education and a supportive learning environment for all students."),
         BoxItem("Best Schools for Veterans", "Ranked 47th for best schools for veterans. We take great pride in supporting our service members with dedicated resources, flexible programs, and a welcoming community that honors their service."),
@@ -146,12 +234,13 @@ fun HomeScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(bottom = 20.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
                 Spacer(modifier = Modifier.height(8.dp))
             }
+
+            item { HistoryTimeline() }
 
             item { BoxHeader("National Rankings") }
             items(nationalRankings) { item -> ExpandableBoxCard(item) }
@@ -465,8 +554,7 @@ fun TrivialScreen(viewModel: MainViewModel) {
             modifier = Modifier
                 .weight(1f)
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(bottom = 20.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(questions) { question ->
                 QuestionCard(
