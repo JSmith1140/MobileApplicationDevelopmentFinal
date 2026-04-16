@@ -85,7 +85,7 @@ fun TabScreen(viewModel: MainViewModel) {
             when (tabIndex) {
                 0 -> ScreenSetup(viewModel)
                 1 -> TrivialScreen(viewModel)
-                2 -> FameScreen()
+                2 -> HomeScreen()
                 3 -> DiningScreen()
             }
         }
@@ -109,7 +109,7 @@ fun TabScreen(viewModel: MainViewModel) {
 }
 
 @Composable
-fun FameScreen() {
+fun HomeScreen() {
     val nationalRankings = listOf(
         BoxItem("Best Regional University", "Roger Williams University is placed 35th as the best regional university in the North. This ranking highlights our commitment to providing a top-tier education and a supportive learning environment for all students."),
         BoxItem("Best Schools for Veterans", "Ranked 47th for best schools for veterans. We take great pride in supporting our service members with dedicated resources, flexible programs, and a welcoming community that honors their service."),
