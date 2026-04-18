@@ -85,7 +85,7 @@ fun TabScreen(viewModel: MainViewModel) {
             when (tabIndex) {
                 0 -> ScreenSetup(viewModel)
                 1 -> TrivialScreen(viewModel)
-                2 -> FameScreen()
+                2 -> HomeScreen()
                 3 -> DiningScreen()
             }
         }
@@ -156,7 +156,6 @@ fun HistoryTimeline() {
                 // Event Content
                 Column(
                     modifier = Modifier.weight(1f).padding(horizontal = 12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = historyEvents[currentIndex].title,
@@ -197,19 +196,19 @@ fun HistoryTimeline() {
 }
 
 @Composable
-fun FameScreen() {
+fun HomeScreen() {
     val nationalRankings = listOf(
-        BoxItem("Best Regional University", "Roger Williams University is placed 35th as the best regional university in the North. This ranking highlights our commitment to providing a top-tier education and a supportive learning environment for all students."),
-        BoxItem("Best Schools for Veterans", "Ranked 47th for best schools for veterans. We take great pride in supporting our service members with dedicated resources, flexible programs, and a welcoming community that honors their service."),
-        BoxItem("Architecture Excellence", "The Architecture program is ranked 78th in the nation. Our Cummings School of Architecture is renowned for its innovative curriculum and for preparing students to lead in a rapidly changing world."),
-        BoxItem("Best Campus Food", "Our food is ranked 21st in the nation! From locally sourced ingredients to diverse culinary options, our dining services consistently deliver a high-quality experience for the entire campus community.")
+        BoxItem("Best Regional University", "Roger Williams University is placed 35th as the best regional university in the North. This ranking highlights our commitment to providing a top-tier education and a supportive learning environment for all students.", R.drawable.rwuimage),
+        BoxItem("Best Schools for Veterans", "Ranked 47th for best schools for veterans. We take great pride in supporting our service members with dedicated resources, flexible programs, and a welcoming community that honors their service.", R.drawable.rwuveterans),
+        BoxItem("Architecture Excellence", "The Architecture program is ranked 78th in the nation. Our Cummings School of Architecture is renowned for its innovative curriculum and for preparing students to lead in a rapidly changing world.", R.drawable.rwuarchitecture),
+        BoxItem("Best Campus Food", "Our food is ranked 21st in the nation! From locally sourced ingredients to diverse culinary options, our dining services consistently deliver a high-quality experience for the entire campus community.", R.drawable.rwucampusfood)
     )
 
     val athleticAchievements = listOf(
-        BoxItem("CCC Team Champions", "Mens track & field 2024 CCC team Champions scoring 252 points. This victory showcases the incredible talent and dedication of our student-athletes and coaching staff in achieving excellence on the field."),
-        BoxItem("First 2,000-Point Scorer", "Mens basketball player Ian Coene became the first 2,000-point scorer in program history. This historic milestone reflects years of hard work, skill, and a passion for the game that inspires us all."),
-        BoxItem("Records Broken", "Womans basketball player Katy Bovee set records with 1,570 career points and 178 three-pointers. Her outstanding performance on the court has cemented her legacy as one of the program's all-time greats."),
-        BoxItem("National Sailing Champions", "Sailing team won the 2024 ICSA Open Team Race National Championship. This achievement solidifies Roger Williams University's position as a powerhouse in collegiate sailing on a national stage.")
+        BoxItem("CCC Team Champions", "Mens track & field 2024 CCC team Champions scoring 252 points. This victory showcases the incredible talent and dedication of our student-athletes and coaching staff in achieving excellence on the field.", R.drawable.rwutrack),
+        BoxItem("First 2,000-Point Scorer", "Mens basketball player Ian Coene became the first 2,000-point scorer in program history. This historic milestone reflects years of hard work, skill, and a passion for the game that inspires us all.", R.drawable.rwubasketball),
+        BoxItem("Records Broken", "Woman's basketball player Katy Bovee set records with 1,570 career points and 178 three-pointers. Her outstanding performance on the court has cemented her legacy as one of the program's all-time greats.", R.drawable.rwuwomenbasketball),
+        BoxItem("National Sailing Champions", "Sailing team won the 2024 ICSA Open Team Race National Championship. This achievement solidifies Roger Williams University's position as a powerhouse in collegiate sailing on a national stage.", R.drawable.rwu_sailing)
     )
 
     val alumni = listOf(
@@ -222,9 +221,9 @@ fun FameScreen() {
     )
 
     val braggingRights = listOf(
-        BoxItem("Beautiful Bristol Campus", "Stunning waterfront views on our historic 140-acre campus. Our location in Bristol, Rhode Island, provides an inspiring backdrop for learning, living, and creating lifelong memories."),
-        BoxItem("Global Sustainability", "Top 5% of universities globally for sustainability initiatives. We are committed to environmental stewardship and integrating sustainable practices into every aspect of campus life."),
-        BoxItem("Student Engagement", "Ranked 1st in Rhode Island for student engagement and success. Our faculty and staff are dedicated to ensuring every student has the support they need to thrive academically and personally.")
+        BoxItem("Beautiful Bristol Campus", "Stunning waterfront views on our historic 140-acre campus. Our location in Bristol, Rhode Island, provides an inspiring backdrop for learning, living, and creating lifelong memories.", R.drawable.rwucampuspic),
+        BoxItem("Global Sustainability", "Top 5% of universities globally for sustainability initiatives. We are committed to environmental stewardship and integrating sustainable practices into every aspect of campus life.", R.drawable.rwuclimate),
+        BoxItem("Student Engagement", "Ranked 1st in Rhode Island for student engagement and success. Our faculty and staff are dedicated to ensuring every student has the support they need to thrive academically and personally.", R.drawable.rwustudentengagment)
     )
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -234,7 +233,8 @@ fun FameScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(bottom = 20.dp)
         ) {
             item {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -266,35 +266,6 @@ fun BoxHeader(title: String) {
         color = MaterialTheme.colorScheme.secondary,
         modifier = Modifier.padding(vertical = 8.dp)
     )
-}
-
-@Composable
-fun BoxCard(item: BoxItem) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFE6E6FA) // Light Lavender
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
-            SparkleEffect()
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = item.title,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.secondary,
-                    fontSize = 16.sp
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = item.detail,
-                    color = MaterialTheme.colorScheme.secondary,
-                    fontSize = 14.sp
-                )
-            }
-        }
-    }
 }
 
 @Composable
@@ -463,7 +434,6 @@ fun TrivialScreen(viewModel: MainViewModel) {
         // If we were waiting for a load, and we now have a full set (or at least some data)
         if (waitingForLoad && allQuestions.isNotEmpty()) {
             questions = allQuestions.shuffled()
-            waitingForLoad = false
         }
     }
 
