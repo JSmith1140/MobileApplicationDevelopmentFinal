@@ -1,4 +1,4 @@
-package com.maxli.coursegpa
+package com.universityXYZ.rogerwilliamsuniversity
 
 import android.app.Application
 import android.os.Bundle
@@ -36,7 +36,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.maxli.coursegpa.ui.theme.CourseTheme
+import com.universityXYZ.rogerwilliamsuniversity.ui.theme.CourseTheme
 
 private val validGrades = setOf(
     "A", "A-",
@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TabScreen(viewModel: MainViewModel) {
     var tabIndex by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Acad", "Trivial", "Home", "Dining")
+    val tabs = listOf("Acad", "Trivial", "Home", "Dining", "Settings")
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -87,19 +87,28 @@ fun TabScreen(viewModel: MainViewModel) {
                 1 -> TrivialScreen(viewModel)
                 2 -> HomeScreen()
                 3 -> DiningScreen()
+                4 -> SettingsScreen()
             }
         }
 
         TabRow(
             selectedTabIndex = tabIndex,
-            containerColor = MaterialTheme.colorScheme.secondary,   // background of tab row
-            contentColor = MaterialTheme.colorScheme.onSecondary    // default text color
+            containerColor = MaterialTheme.colorScheme.secondary,
+            contentColor = MaterialTheme.colorScheme.onSecondary
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
                     selected = tabIndex == index,
                     onClick = { tabIndex = index },
-                    text = { Text(title) },
+                    text = {
+                        Text(
+                            text = title,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            softWrap = false
+                        )
+                    },
                     selectedContentColor = MaterialTheme.colorScheme.tertiary,
                     unselectedContentColor = MaterialTheme.colorScheme.onSecondary
                 )
@@ -115,12 +124,12 @@ fun HistoryTimeline() {
         BoxItem("1945", "Expansion: Post-WWII enrollment surge brings new focus on business and technical programs."),
         BoxItem("1956", "Independence: The school is officially chartered as Roger Williams Junior College."),
         BoxItem("1969", "The Big Move: RWU relocates to the beautiful 140-acre waterfront campus in Bristol, RI."),
-        BoxItem("1992", "University Status: The institution is renamed Roger Williams University, reflecting its academic growth."), // Middle Point
+        BoxItem("1992", "University Status: The institution is renamed Roger Williams University, reflecting its academic growth."),
         BoxItem("2012", "Legal Excellence: RWU Law is recognized as a top school for public interest law in the region."),
         BoxItem("2024", "Modern Era: RWU leads in coastal sustainability and community-engaged learning.")
     )
 
-    var currentIndex by remember { mutableIntStateOf(4) } // Start at 1992 (Middle Point)
+    var currentIndex by remember { mutableIntStateOf(4) }
 
     Column(
         modifier = Modifier
@@ -141,7 +150,6 @@ fun HistoryTimeline() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Left Arrow
                 IconButton(
                     onClick = { if (currentIndex > 0) currentIndex-- },
                     enabled = currentIndex > 0
@@ -153,7 +161,6 @@ fun HistoryTimeline() {
                     )
                 }
 
-                // Event Content
                 Column(
                     modifier = Modifier.weight(1f).padding(horizontal = 12.dp),
                 ) {
@@ -179,7 +186,6 @@ fun HistoryTimeline() {
                     )
                 }
 
-                // Right Arrow
                 IconButton(
                     onClick = { if (currentIndex < historyEvents.size - 1) currentIndex++ },
                     enabled = currentIndex < historyEvents.size - 1
@@ -236,9 +242,7 @@ fun HomeScreen() {
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(bottom = 20.dp)
         ) {
-            item {
-                Spacer(modifier = Modifier.height(8.dp))
-            }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
 
             item { HistoryTimeline() }
 
@@ -318,7 +322,7 @@ fun ExpandableBoxCard(item: BoxItem) {
                 )
             ),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFE6E6FA) // Light Lavender
+            containerColor = Color(0xFFE6E6FA)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -341,7 +345,7 @@ fun ExpandableBoxCard(item: BoxItem) {
                     )
                     Icon(
                         painter = painterResource(
-                            id = if (expanded) android.R.drawable.arrow_up_float else android.R.drawable.ic_menu_info_details
+                            id = if (expanded) android.R.drawable.arrow_up_float else android.R.drawable.arrow_down_float
                         ),
                         contentDescription = if (expanded) "Collapse" else "Expand",
                         tint = MaterialTheme.colorScheme.tertiary
@@ -388,7 +392,7 @@ fun DiningScreen() {
     val mealPlans = listOf(
         BoxItem("125 Block Plan", "Ideal plan for apartment dwellers who want to eat an average of 7-8 meals per week on campus and use 400 in Hawk Dollars throughout the semester; 3 Bonus Meals per semester to be used for yourself, another on-campus student, or commuter."),
         BoxItem("Block Meal Plans", "Block Meal Plans offer students the most flexibility as the amount of meals can be used throughout the semester in any manner. Students can use their block meals at our two all-you-care-to-eat dining halls.  All Block Meal Plans come with Bonus Meals, these meals can be used for guests not on a Roger Williams dining plan."),
-        BoxItem("Commuter Plan", "This plan offers the best value for commuting students. You will receive 20 meals per semester that can be eaten at any meal period, as well as 300 Hawk Dollars."),
+        BoxItem("Commuter Plan", "This plan offers the best value for commuting students. You will receive 200 meals per semester that can be eaten at any meal period, as well as 300 Hawk Dollars."),
         BoxItem("Hawk Dollars", "Hawk Dollars are accepted like cash in all our dining locations.  Hawk Dollars are a “declining balance account” that works on the same principle as a debit card.  You can use your Hawk Dollars to purchase beverages, snacks, or even a full meal in all of the RWU retail and residential locations."),
         BoxItem("Points", "Much like Hawk Dollars, Points are accepted like cash in all our dining locations and are a “declining balance account” that works on the same principle as a debit card ")
     )
@@ -419,6 +423,78 @@ fun DiningScreen() {
 }
 
 @Composable
+fun SettingsScreen() {
+    Column(modifier = Modifier.fillMaxSize()) {
+        HeaderSection("Settings")
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(bottom = 20.dp)
+        ) {
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+
+            item { BoxHeader("App Credits") }
+            item { CreditItem("Group Members", "Jacob Smith, Adam Walton, Anton Ryan, Nathan Valle") }
+            item { CreditItem("Version", "3.2.4") }
+
+            item { BoxHeader("Campus Life") }
+            item { CreditItem("Meal Swipes Left", "142") }
+            item { CreditItem("Hawk Dollars", "$250.00") }
+
+            item { BoxHeader("Fun Fact") }
+            item {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFE6E6FA)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                ) {
+                    Text(
+                        text = "Roger Williams University played Merrimack College in rugby twice this season, and both Adam and Anton play for Merrimack. We lost both games :(",
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary,
+                        lineHeight = 22.sp
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CreditItem(label: String, value: String) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F8FF)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(14.dp)
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = label,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.secondary,
+                fontSize = 14.sp
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = value,
+                color = MaterialTheme.colorScheme.tertiary,
+                fontSize = 15.sp,
+                lineHeight = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+    }
+}
+
+@Composable
 fun TrivialScreen(viewModel: MainViewModel) {
     val allQuestions by viewModel.allTrivialQuestions.observeAsState(listOf())
     var numberOfQuestions by remember { mutableStateOf("") }
@@ -426,12 +502,9 @@ fun TrivialScreen(viewModel: MainViewModel) {
     val (selectedAnswers, setSelectedAnswers) = remember { mutableStateOf<Map<Int, String>>(emptyMap()) }
     var score by remember { mutableStateOf<String?>(null) }
     var isError by remember { mutableStateOf(false) }
-
-    // Flag to handle the case where we just clicked Load but DB was empty or being refreshed
     var waitingForLoad by remember { mutableStateOf(false) }
 
     LaunchedEffect(allQuestions) {
-        // If we were waiting for a load, and we now have a full set (or at least some data)
         if (waitingForLoad && allQuestions.isNotEmpty()) {
             questions = allQuestions.shuffled()
         }
@@ -454,14 +527,11 @@ fun TrivialScreen(viewModel: MainViewModel) {
     ) {
         HeaderSection("University Trivia")
 
-
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Load Button
         Button(
             onClick = {
                 viewModel.loadTriviaQuestions()
-                // Reset state for a new game
                 setSelectedAnswers(emptyMap())
                 score = null
                 isError = false
@@ -478,7 +548,6 @@ fun TrivialScreen(viewModel: MainViewModel) {
             Text("Load", fontSize = 16.sp)
         }
 
-        // Input Section
         CustomTextField(
             title = "Number of Questions",
             textState = numberOfQuestions,
@@ -491,19 +560,16 @@ fun TrivialScreen(viewModel: MainViewModel) {
             errorMessage = "Enter 1 to 10"
         )
 
-        // Go Button
         Button(
             onClick = {
                 val num = numberOfQuestions.toIntOrNull()
                 if (num != null && num > 0 && num <= 10) {
                     isError = false
-                    // Ensure we have questions to take from
                     if (allQuestions.isNotEmpty()) {
                         questions = allQuestions.shuffled().take(num)
                     } else {
-                        // If user hasn't pressed Load yet, maybe load them first?
                         viewModel.loadTriviaQuestions()
-                        waitingForLoad = true // This will load all 10, then they can 'Go' again or we can handle it
+                        waitingForLoad = true
                     }
                     setSelectedAnswers(emptyMap())
                     score = null
@@ -519,7 +585,6 @@ fun TrivialScreen(viewModel: MainViewModel) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Questions List
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
@@ -539,7 +604,6 @@ fun TrivialScreen(viewModel: MainViewModel) {
             }
         }
 
-        // Grade Button
         if (questions.isNotEmpty()) {
             Button(
                 onClick = {
@@ -561,7 +625,6 @@ fun TrivialScreen(viewModel: MainViewModel) {
             }
         }
 
-        // Score Section
         score?.let {
             Column(
                 horizontalAlignment = CenterHorizontally,
@@ -589,7 +652,7 @@ fun QuestionCard(question: TrivialQuestion, selectedAnswer: String?, onAnswerSel
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFE6E6FA) // Light Lavender
+            containerColor = Color(0xFFE6E6FA)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -702,7 +765,7 @@ fun MainScreen(
         CustomTextField(
             title = "Letter Grade",
             textState = letterGrade,
-            onTextChange = { letterGrade = it.trim().uppercase() },
+            onTextChange = { letterGrade = it.trim() },
             keyboardType = KeyboardType.Text,
             isError = letterGrade.isNotEmpty() && !isGradeValid,
             errorMessage = "Valid grades: A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F"
@@ -727,7 +790,7 @@ fun MainScreen(
                                 Course(
                                     courseName,
                                     courseCreditHour.toInt(),
-                                    letterGrade
+                                    letterGrade.uppercase()
                                 )
                             )
                             searching = false
@@ -765,7 +828,7 @@ fun MainScreen(
 
                 Button(
                     onClick = {
-                        calculatedGPA = calculateGPA2(allCourses)
+                        calculatedGPA = calculateGPA(allCourses)
                     },
                     colors = orangeButtonColors
                 ) { Text("GPA") }
@@ -848,8 +911,7 @@ private fun HeaderSection(title: String) {
     )
 }
 
-// ===== GPA calculation =====
-private fun calculateGPA2(courses: List<Course>): Double {
+private fun calculateGPA(courses: List<Course>): Double {
     val gradePoints = mapOf(
         "A" to 4.0, "A-" to 3.67,
         "B+" to 3.33, "B" to 3.0, "B-" to 2.67,
